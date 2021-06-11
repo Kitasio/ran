@@ -29,13 +29,6 @@ const createRecord = () => {
 
         if (selected && types.includes(selected.type)) {
             file.value = selected
-            let formData = new FormData();
-                
-            formData.append("file", file.value);
-            axios.post('/api/upload', formData).then(r => {
-                fileUrl.value = '/' + r.data
-                console.log(fileUrl.value)
-            })
         } else {
             file.value = null
         }
@@ -47,6 +40,7 @@ const createRecord = () => {
         formData.append("file", file.value);
         axios.post('/api/upload', formData).then(r => {
             fileUrl.value = '/' + r.data
+            console.log(fileUrl.value)
         })
     }
 
