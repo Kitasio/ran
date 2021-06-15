@@ -51,6 +51,6 @@ func upload(w http.ResponseWriter, r *http.Request) {
 	// write this byte array to our temporary file
 	tempFile.Write(fileBytes)
 	// return that we have successfully uploaded our file!
-	img := img{Name: tempFile.Name(), URL: "/server/" + tempFile.Name()}
+	img := img{Name: tempFile.Name(), URL: "/" + tempFile.Name()}
 	json.NewEncoder(w).Encode(img)
 }

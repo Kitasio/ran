@@ -14,7 +14,7 @@ import (
 
 const (
 	DRIVER_NAME      = "mysql"
-	DATA_SOURCE_NAME = "root:shitface1.0@/ran"
+	DATA_SOURCE_NAME = "kit:shitface1.0@/ran"
 )
 
 var db *sql.DB

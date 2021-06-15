@@ -121,9 +121,9 @@ func main() {
 
 	spa := spaHandler{staticPath: "dist", indexPath: "index.html"}
 
-	router.HandleFunc("/server/upload", upload).Methods("POST", "OPTIONS")
-	router.HandleFunc("/server/status", status).Methods("GET", "OPTIONS")
-	router.PathPrefix("/server/").Handler(http.StripPrefix("/server/public/", http.FileServer(http.Dir("public"))))
+	router.HandleFunc("/public/upload", upload).Methods("POST", "OPTIONS")
+	router.HandleFunc("/public/status", status).Methods("GET", "OPTIONS")
+	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	// Handles all the requests that comes to /static/*
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	// Handles everything exsept requests coming to the API
