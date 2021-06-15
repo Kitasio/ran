@@ -17,7 +17,7 @@ const createRecord = () => {
             })
             .then(response => {
                 router.go()
-            }) 
+            })
     }
 
     const handleChange = (e) => {
@@ -36,10 +36,10 @@ const createRecord = () => {
 
     const uploadImage = async () => {
         let formData = new FormData();
-                
+
         formData.append("file", file.value);
         // for local dev change to localhost:8080
-        fetch('http://178.154.205.40/server/upload', {
+        fetch('/server/upload', {
             method: 'post',
             body: formData,
         }).then(res => res.json())

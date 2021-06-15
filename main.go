@@ -9,11 +9,10 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
-	"github.com/kitasio/ran/auth"
 )
 
 const (
-	CONN_HOST = "localhost"
+	CONN_HOST = "0.0.0.0"
 	CONN_PORT = "8000"
 )
 
@@ -31,49 +30,49 @@ var routes = Routes{
 		"upload",
 		"POST",
 		"/api/upload",
-		auth.Upload,
+		upload,
 	},
 	Route{
 		"login",
 		"POST",
 		"/api/login",
-		auth.Login,
+		login,
 	},
 	Route{
 		"logout",
 		"GET",
 		"/api/logout",
-		auth.Logout,
+		logout,
 	},
 	Route{
 		"auth",
 		"GET",
 		"/api/auth",
-		auth.Auth,
+		auth,
 	},
 	Route{
 		"readRecords",
 		"POST",
 		"/api/readRecords",
-		auth.ReadRecords,
+		readRecords,
 	},
 	Route{
 		"updateRecord",
 		"POST",
 		"/api/updateRecord",
-		auth.UpdateRecord,
+		updateRecord,
 	},
 	Route{
 		"createRecord",
 		"POST",
 		"/api/createRecord",
-		auth.CreateRecord,
+		createRecord,
 	},
 	Route{
 		"deleteRecord",
 		"POST",
 		"/api/deleteRecord",
-		auth.IsAuthorized(auth.DeleteRecord),
+		isAuthorized(deleteRecord),
 	},
 }
 
@@ -116,12 +115,15 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	muxRouter := mux.NewRouter()
+	muxRouter := mux.NewRouter().StrictSlash(true)
 
 	router := AddRoutes(muxRouter)
 
 	spa := spaHandler{staticPath: "dist", indexPath: "index.html"}
 
+	router.HandleFunc("/server/upload", upload).Methods("POST", "OPTIONS")
+	router.HandleFunc("/server/status", status).Methods("GET", "OPTIONS")
+	router.PathPrefix("/server/").Handler(http.StripPrefix("/server/public/", http.FileServer(http.Dir("public"))))
 	// Handles all the requests that comes to /static/*
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	// Handles everything exsept requests coming to the API

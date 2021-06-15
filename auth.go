@@ -1,4 +1,4 @@
-package auth
+package main
 
 import (
 	"database/sql"
@@ -177,7 +177,7 @@ func getJSONWithArg(sqlString, arg string) ([]byte, error) {
 	return jsonData, nil
 }
 
-func ReadRecords(w http.ResponseWriter, r *http.Request) {
+func readRecords(w http.ResponseWriter, r *http.Request) {
 	reqData := clientQuery{}
 	err := json.NewDecoder(r.Body).Decode(&reqData)
 	if err != nil {
@@ -203,7 +203,7 @@ func ReadRecords(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func CreateRecord(w http.ResponseWriter, r *http.Request) {
+func createRecord(w http.ResponseWriter, r *http.Request) {
 	reqData := clientQuery{}
 	err := json.NewDecoder(r.Body).Decode(&reqData)
 	log.Printf("request data: %v", reqData)
@@ -226,7 +226,7 @@ func CreateRecord(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Last Inserted Record Id is  :: %s", strconv.FormatInt(id, 10))
 }
 
-func UpdateRecord(w http.ResponseWriter, r *http.Request) {
+func updateRecord(w http.ResponseWriter, r *http.Request) {
 	reqData := clientQuery{}
 	err := json.NewDecoder(r.Body).Decode(&reqData)
 	log.Printf("request data: %v", reqData)
@@ -250,7 +250,7 @@ func UpdateRecord(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Last Inserted Record Id is  :: %s", strconv.FormatInt(id, 10))
 }
 
-func DeleteRecord(w http.ResponseWriter, r *http.Request) {
+func deleteRecord(w http.ResponseWriter, r *http.Request) {
 	reqData := clientQuery{}
 	err := json.NewDecoder(r.Body).Decode(&reqData)
 	if err != nil {
@@ -278,7 +278,7 @@ func DeleteRecord(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Number of rows deleted in database are :: %d", rowsAffected)
 }
 
-func Auth(w http.ResponseWriter, r *http.Request) {
+func auth(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, sessionName)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -294,7 +294,7 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 }
 
 // TODO store passwords securely in the database
-func Login(w http.ResponseWriter, r *http.Request) {
+func login(w http.ResponseWriter, r *http.Request) {
 	user := User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -332,7 +332,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
+func logout(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, sessionName)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
