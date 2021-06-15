@@ -39,7 +39,7 @@ const createRecord = () => {
 
         formData.append("file", file.value);
         // for local dev change to localhost:8080
-        fetch('/public/upload', {
+        fetch('/api/upload', {
             method: 'post',
             body: formData,
         }).then(res => res.json())

@@ -27,6 +27,12 @@ type Routes []Route
 
 var routes = Routes{
 	Route{
+		"status",
+		"GET",
+		"/api/status",
+		status,
+	},
+	Route{
 		"upload",
 		"POST",
 		"/api/upload",
@@ -121,8 +127,8 @@ func main() {
 
 	spa := spaHandler{staticPath: "dist", indexPath: "index.html"}
 
-	router.HandleFunc("/public/upload", upload).Methods("POST", "OPTIONS")
-	router.HandleFunc("/public/status", status).Methods("GET", "OPTIONS")
+	// router.HandleFunc("/public/upload", upload).Methods("POST", "OPTIONS")
+	// router.HandleFunc("/public/status", status).Methods("GET", "OPTIONS")
 	router.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	// Handles all the requests that comes to /static/*
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
