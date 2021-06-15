@@ -38,7 +38,8 @@ const createRecord = () => {
         let formData = new FormData();
                 
         formData.append("file", file.value);
-        fetch('http://localhost:8080/server/upload', {
+        // for local dev change to localhost:8080
+        fetch('http://178.154.205.40/server/upload', {
             method: 'post',
             body: formData,
         }).then(res => res.json())
