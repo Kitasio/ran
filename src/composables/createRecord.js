@@ -38,9 +38,16 @@ const createRecord = () => {
         let formData = new FormData();
                 
         formData.append("file", file.value);
-        axios.post('/api/upload', formData).then(r => {
-            fileUrl.value = '/' + r.data
-            console.log(fileUrl.value)
+        fetch('http://localhost:8080/server/upload', {
+            method: 'post',
+            body: formData,
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data.url)
+            fileUrl.value = data.url
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 

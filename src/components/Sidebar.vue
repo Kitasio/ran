@@ -2,7 +2,7 @@
   <div class="flex flex-col justify-between">
       <div class="flex flex-col">
           <div class="flex justify-center mt-5">
-              <img src="/public/images/sidebar/ru.svg" alt="">
+              <img src="/images/sidebar/ru.svg" alt="">
               <img class="mx-3" src="../assets/images/sidebar/ch.svg" alt="">
               <img src="../assets/images/sidebar/uk.svg" alt="">
           </div>
@@ -18,7 +18,7 @@
               </div>
               <div>
                 <div class="my-3 flex justify-between">
-                    <h1 to="/" class="text-md uppercase font-semibold hover:text-blue-600">Институт</h1>
+                    <h1 to="/" class="text-md uppercase font-semibold hover:text-blue-600 cursor-pointer" @click="links1.show = !links1.show">Институт</h1>
                     <img @click="links1.show = !links1.show" class="w-5 mr-7 cursor-pointer" src="../assets/images/icons/chevron-down.svg" alt="">
                 </div>
                 <div v-if="links1.show" class="ml-3 flex flex-col">
@@ -30,7 +30,7 @@
 
               <div>
                 <div class="my-3 flex justify-between">
-                    <h1 to="/" class="text-md uppercase font-semibold hover:text-blue-600">ОБРАЗОВАНИЕ</h1>
+                    <h1 to="/" class="text-md uppercase font-semibold hover:text-blue-600 cursor-pointer" @click="links2.show = !links2.show">ОБРАЗОВАНИЕ</h1>
                     <img @click="links2.show = !links2.show" class="w-5 mr-7 cursor-pointer" src="../assets/images/icons/chevron-down.svg" alt="">
                 </div>
                 <div v-if="links2.show" class="ml-3 flex flex-col">
@@ -42,7 +42,7 @@
 
               <div>
                 <div class="my-3 flex justify-between">
-                    <h1 to="/" class="text-md uppercase font-semibold hover:text-blue-600">НАУКА</h1>
+                    <h1 to="/" class="text-md uppercase font-semibold hover:text-blue-600 cursor-pointer" @click="links3.show = !links3.show">НАУКА</h1>
                     <img @click="links3.show = !links3.show" class="w-5 mr-7 cursor-pointer" src="../assets/images/icons/chevron-down.svg" alt="">
                 </div>
                 <div v-if="links3.show" class="ml-3 flex flex-col">

@@ -1,5 +1,7 @@
 <template>
+<div>
     details page
+</div>
 </template>
 
 <script>

@@ -47,22 +47,38 @@ type clientQuery struct {
 var readQueries map[string]string = map[string]string{
 	"getAllUsers":   "SELECT name FROM users",
 	"getManagement": "SELECT * FROM management",
+	"getCouncil":    "SELECT * FROM council",
 	"allNews":       "SELECT * FROM news",
+	"allAds":        "SELECT * FROM ads",
+	"allUnits":      "SELECT * FROM units",
+	"allPartners":   "SELECT * FROM partners",
 	"singleNews":    "SELECT * FROM news WHERE id=?",
+	"singleAd":      "SELECT * FROM ads WHERE id=?",
+	"singleUnit":    "SELECT * FROM units WHERE id=?",
 }
 
 var writeQueries map[string]string = map[string]string{
 	"createManagement": "INSERT management SET name=?, position=?, phone=?, email=?",
+	"createCouncil":    "INSERT council SET name=?, position=?, phone=?, email=?",
 	"createNews":       "INSERT news SET title=?, tag=?, date=?, body=?, img=?",
+	"createAd":         "INSERT ads SET title=?, tag=?, date=?, time=?",
+	"createUnit":       "INSERT units SET title=?, name=?, body=?, img=?",
+	"createPartner":    "INSERT partners SET name=?, link=?, img=?",
 }
 
 var updateQueries map[string]string = map[string]string{
 	"updateNews": "UPDATE news SET title=?, tag=?, date=?, body=?, img=? WHERE id=?",
+	"updateAd":   "UPDATE ads SET title=?, tag=?, date=?, time=? WHERE id=?",
+	"updateUnit": "UPDATE units SET title=?, name=?, body=?, img=? WHERE id=?",
 }
 
 var deleteQueries map[string]string = map[string]string{
 	"deleteManagement": "DELETE from management WHERE id=?",
+	"deleteCouncil":    "DELETE from council WHERE id=?",
 	"deleteNews":       "DELETE from news WHERE id=?",
+	"deleteAd":         "DELETE from ads WHERE id=?",
+	"deleteUnit":       "DELETE from units WHERE id=?",
+	"deletePartner":    "DELETE from partners WHERE id=?",
 }
 
 func IsAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
