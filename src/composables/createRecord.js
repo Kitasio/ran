@@ -31,6 +31,7 @@ const createRecord = () => {
 
         if (selected && types.includes(selected.type)) {
             file.value = selected
+            fileUrl.value = '/'+selected.name
         } else {
             file.value = null
         }
