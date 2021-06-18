@@ -8,13 +8,6 @@
           </div>
           <div class="mt-3 text-red-400">{{ error }}</div>
       </form>
-      <div>{{ admin }}</div>
-      <div @click="getJson('getAllUsers')">get json data</div>
-      <div v-for="item in jsonData" :key="item.uid">
-        <div>{{ item.name }}</div>
-        <div>{{ item.password }}</div>
-        <div>{{ item.uid }}</div>
-      </div>
   </div>
 </template>
 

@@ -13,7 +13,7 @@ const createRecord = () => {
 
     const writeToDb = async (query, ...data) => {
         axios
-            .post("http://localhost:3090/api/createRecord", {
+            .post("/api/createRecord", {
                 query: query,
                 data: data,
             })
@@ -40,7 +40,7 @@ const createRecord = () => {
         let formData = new FormData();
         
         formData.append("file", file.value);
-        axios.post('http://localhost:3090/api/upload', formData, access_token)
+        axios.post('/api/upload', formData, access_token)
         .then(res => {
             console.log(res)
         })

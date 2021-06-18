@@ -16,7 +16,7 @@ const getAuth = () => {
             headers: { Authorization: `Bearer ${rt}` }
         };
         axios
-            .post("http://127.0.0.1:3090/api/auth", {}, access_token)
+            .post("/api/auth", {}, access_token)
             .then(response => {
                 if (response.data) {
                     admin.value = response.data

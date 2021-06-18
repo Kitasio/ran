@@ -12,7 +12,7 @@ const signIn = () => {
     const login = () => {
         error.value = null
         axios
-            .post("http://localhost:3090/api/login", {
+            .post("/api/login", {
                 username: username.value,
                 password: password.value, 
             })
