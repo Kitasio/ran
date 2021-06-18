@@ -13,7 +13,7 @@ const createRecord = () => {
 
     const writeToDb = async (query, ...data) => {
         axios
-            .post("/api/createRecord", {
+            .post("http://localhost:3090/api/createRecord", {
                 query: query,
                 data: data,
             }, access_token)
@@ -42,8 +42,7 @@ const createRecord = () => {
         formData.append("file", file.value);
         axios.post('/api/upload', formData, access_token)
         .then(res => {
-            console.log(res.data)
-            fileUrl.value = JSON.parse(res.data)
+            fileUrl.value = res.data["filepath"]
         })
         .catch(err => {
             console.log(err)
