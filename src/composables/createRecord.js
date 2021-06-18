@@ -16,7 +16,7 @@ const createRecord = () => {
             .post("/api/createRecord", {
                 query: query,
                 data: data,
-            })
+            }, access_token)
             .then(response => {
                 router.go()
             })
@@ -31,7 +31,7 @@ const createRecord = () => {
 
         if (selected && types.includes(selected.type)) {
             file.value = selected
-            fileUrl.value = '/'+selected.name
+            fileUrl.value = '/static/'+selected.name
         } else {
             file.value = null
         }
