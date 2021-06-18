@@ -31,7 +31,6 @@ const createRecord = () => {
 
         if (selected && types.includes(selected.type)) {
             file.value = selected
-            fileUrl.value = '/static/'+selected.name
         } else {
             file.value = null
         }
@@ -43,7 +42,8 @@ const createRecord = () => {
         formData.append("file", file.value);
         axios.post('/api/upload', formData, access_token)
         .then(res => {
-            console.log(res)
+            console.log(res.data)
+            fileUrl.value = JSON.parse(res.data)
         })
         .catch(err => {
             console.log(err)
