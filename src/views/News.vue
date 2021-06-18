@@ -9,8 +9,8 @@
         <label for="image">Выберите картинку</label>
         <div class="flex m-4">
             <input @change="handleChange($event)" class="mb-5 mr-5" name="file" type="file" placeholder="Картинка">
-            <div v-if="!fileUrl" @click="uploadImage" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Сохранить</div>
-            <div v-if="fileUrl" @click="uploadImage" class="p-2 transition cursor-pointer rounded-md text-blue-600">Готово</div>
+            <div v-if="!file" @click="uploadImage" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Сохранить</div>
+            <div v-if="file" @click="uploadImage" class="p-2 transition cursor-pointer rounded-md text-blue-600">Готово</div>
         </div>
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.title" type="text" placeholder="Заголовок">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.tag" type="text" placeholder="Тег">

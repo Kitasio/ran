@@ -8,6 +8,7 @@
           </div>
           <div class="mt-3 text-red-400">{{ error }}</div>
       </form>
+      <div>{{ admin }}</div>
       <div @click="getJson('getAllUsers')">get json data</div>
       <div v-for="item in jsonData" :key="item.uid">
         <div>{{ item.name }}</div>
@@ -23,7 +24,8 @@ import signIn from "../composables/signIn"
 import signOut from "../composables/signOut"
 import readRecords from "../composables/readRecords"
 
-const { user, checkAuth } = getAuth()
+const { admin, checkAuth } = getAuth()
+// checkAuth()
 const { username, password, error, login } = signIn()
 const { logout } = signOut()
 const { getJson, jsonData } = readRecords()

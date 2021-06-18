@@ -12,12 +12,14 @@ const signIn = () => {
     const login = () => {
         error.value = null
         axios
-            .post("/api/login", {
-                name: username.value,
-                password: password.value,
+            .post("http://localhost:3090/api/login", {
+                username: username.value,
+                password: password.value, 
             })
             .then(response => {
                 router.go()
+                const at = response.data['access_token']
+                localStorage.setItem('access_token', at)
             })
             .catch(err => {
                 error.value = 'Wrong username or password'

@@ -5,7 +5,7 @@ const deleteRecord = () => {
     const router = useRouter()
     const deleteFromDb = (query, ...data) => {
         axios
-            .post("/api/deleteRecord", {
+            .post("http://localhost:3090/api/deleteRecord", {
                 query: query,
                 data: data,
             })

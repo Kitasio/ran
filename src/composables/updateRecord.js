@@ -12,7 +12,7 @@ const updateRecord = () => {
     const updateToDb = async (query, ...data) => {
         console.log(query, data)
         axios
-            .post("/api/updateRecord", {
+            .post("http://localhost:3090/api/updateRecord", {
                 query: query,
                 data: data,
             })
@@ -33,7 +33,7 @@ const updateRecord = () => {
             let formData = new FormData();
                 
             formData.append("file", file.value);
-            axios.post('/api/upload', formData).then(r => {
+            axios.post('http://localhost:3090/api/upload', formData).then(r => {
                 fileUrl.value = '/' + r.data
                 console.log(fileUrl.value)
             })

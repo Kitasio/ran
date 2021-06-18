@@ -4,10 +4,7 @@ import { useRouter } from 'vue-router'
 const signOut = () => {
     const router = useRouter()
     const logout = () => {
-        axios
-            .get("/api/logout")
-            .then(response => (console.log(response))) 
-
+        localStorage.clear()
         router.go()
     }
 
