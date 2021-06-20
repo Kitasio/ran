@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import clientPath  from './config'
 
 const signIn = () => {
     const router = useRouter()
@@ -12,7 +13,7 @@ const signIn = () => {
     const login = () => {
         error.value = null
         axios
-            .post("/api/login", {
+            .post(clientPath + "/api/login", {
                 username: username.value,
                 password: password.value, 
             })

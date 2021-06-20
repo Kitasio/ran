@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import clientPath  from './config'
 
 const getAuth = () => {
     const admin = ref(null)
@@ -16,7 +17,7 @@ const getAuth = () => {
             headers: { Authorization: `Bearer ${rt}` }
         };
         axios
-            .post("/api/auth", {}, access_token)
+            .post(clientPath + "/api/auth", {}, access_token)
             .then(response => {
                 if (response.data) {
                     admin.value = response.data

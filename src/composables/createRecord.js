@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import clientPath  from './config'
 
 const createRecord = () => {
     const router = useRouter()
@@ -13,7 +14,7 @@ const createRecord = () => {
 
     const writeToDb = async (query, ...data) => {
         axios
-            .post("http://localhost:3090/api/createRecord", {
+            .post(clientPath + "/api/createRecord", {
                 query: query,
                 data: data,
             }, access_token)
@@ -23,13 +24,10 @@ const createRecord = () => {
     }
 
     const handleChange = (e) => {
-        // allowed file types
-        const types = ['image/png', 'image/jpeg']
-
         // selected file
         const selected = e.target.files[0]
 
-        if (selected && types.includes(selected.type)) {
+        if (selected) {
             file.value = selected
         } else {
             file.value = null
@@ -40,25 +38,14 @@ const createRecord = () => {
         let formData = new FormData();
         
         formData.append("file", file.value);
-        axios.post('/api/upload', formData, access_token)
+        axios.post(clientPath + '/api/upload', formData, access_token)
         .then(res => {
             fileUrl.value = res.data["filepath"]
+            console.log(res.data)
         })
         .catch(err => {
             console.log(err)
         })
-
-        // fetch('http://localhost:3090/api/upload', {
-        //     method: 'post',
-        //     body: formData,
-        // }).then(res => res.json())
-        // .then(data => {
-        //     console.log(data.url)
-        //     fileUrl.value = data.url
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
     }
 
     return { writeToDb, handleChange, uploadImage, fileUrl }
