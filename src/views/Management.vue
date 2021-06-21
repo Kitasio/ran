@@ -5,13 +5,14 @@
         <div v-if="admin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить дирекцию</div>
       </div>
 
-      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createManagement', doc.name, doc.position, doc.phone, doc.email)">
+      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createManagement', doc.name, doc.position, doc.phone, doc.email, doc.unit)">
         <!-- <label for="image">Выберите картинку</label> -->
         <!-- <input @change="handleChange" class="mb-5" name="image" type="file" placeholder="Картинка"> -->
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.name" type="text" placeholder="Имя">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.position" type="text" placeholder="Должность">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.phone" type="text" placeholder="Телефон">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.email" type="text" placeholder="E-mail">
+        <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.unit" type="text" placeholder="Подразделение">
 
         <div>
             <button class="text-left p-3 rounded text-blue-600 transition bg-white border-2 border-blue-600 hover:bg-blue-600 hover:text-white" v-if="!isLoading">Сохранить</button>
@@ -33,7 +34,9 @@
                 <tbody>
                     <tr v-for="person in jsonData" :key="person.id" @click.alt="deleteFromDb('deleteManagement', person.id)" class="stag relative h-20 border-b border-black">
                         <td class="pl-5 py-3 select-all">{{ person.position }}</td>
-                        <td class="pl-5 py-3 select-all text-blue-600">{{ person.name }}</td>
+                        <td class="pl-5 py-3 select-all text-blue-600">
+                            <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
+                        </td>
                         <td class="pl-5 py-3 select-all">{{ person.phone }}</td>
                         <td class="pl-5 py-3 select-all">{{ person.email }}</td>
                     </tr>
@@ -49,7 +52,9 @@
                   </div>
                   <div class="flex justify-between mt-2">
                       <div class="font-nova-semi">ФИО</div>
-                      <div class="text-sm text-right">{{ person.name }}</div>
+                      <div class="text-sm text-right">
+                          <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
+                      </div>
                   </div>
                   <div class="flex justify-between mt-2">
                       <div class="font-nova-semi">Телефон</div>
@@ -85,6 +90,7 @@ const doc = ref({
     position: '',
     phone: '',
     email: '',
+    unit: '',
 })
 
 const del = (id) => {

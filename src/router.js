@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Login from './views/Login.vue'
 import Management from './views/Management.vue'
+import ManagementId from './views/ManagementId.vue'
 import NotFound from './views/NotFound.vue'
 import News from './views/News.vue'
 import NewsId from './views/NewsId.vue'
@@ -29,6 +30,11 @@ const routes = [
         path: '/management',
         name: 'Management',
         component: Management,
+    },
+    {
+        path: '/management/:id',
+        name: 'ManagementId',
+        component: ManagementId,
     },
     {
         path: '/:catchAll(.*)*',
