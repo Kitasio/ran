@@ -40,8 +40,8 @@
               </div>
             </form>
 
-            <h1 v-if="subRecords.length > 0" class="text-2xl font-nova-bold mb-5">Направления исследований</h1>
-            <div v-for="record in subRecords" :key="record.id" class="flex items-center mb-5" @click.alt="deleteFromDb('deleteResearchDirection', record.id.toString())">
+            <h1 v-if="records.length > 0" class="text-2xl font-nova-bold mb-5">Направления исследований</h1>
+            <div v-for="record in records[0]" :key="record.id" class="flex items-center mb-5" @click.alt="deleteFromDb('deleteResearchDirection', record.id.toString())">
               <div class="bg-blue-600 p-2 rounded-full mr-3"></div>
               <p class="text-lg" v-html="record.body"></p>
             </div>
@@ -60,7 +60,9 @@
                 <tbody>
                     <tr v-for="person in jsonData" :key="person.id" @click.alt="deleteFromDb('deleteManagement', person.id)" class="stag relative h-20 border-b border-black">
                         <td class="pl-5 py-3 select-all">{{ person.position }}</td>
-                        <td class="pl-5 py-3 select-all text-blue-600">{{ person.name }}</td>
+                        <td class="pl-5 py-3 select-all text-blue-600">
+                          <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
+                        </td>
                         <td class="pl-5 py-3 select-all">{{ person.phone }}</td>
                         <td class="pl-5 py-3 select-all">{{ person.email }}</td>
                     </tr>
@@ -76,7 +78,9 @@
                   </div>
                   <div class="flex justify-between mt-2">
                       <div class="font-nova-semi">ФИО</div>
-                      <div class="text-sm text-right">{{ person.name }}</div>
+                      <div class="text-sm text-right">
+                        <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
+                      </div>
                   </div>
                   <div class="flex justify-between mt-2">
                       <div class="font-nova-semi">Телефон</div>
@@ -117,7 +121,7 @@ const { deleteFromDb } = deleteRecord()
 const { writeToDb } = createRecord()
 const { admin, checkAuth } = getAuth()
 const { getJson, jsonData } = readRecords() 
-const { getSubRecords, subRecords } = readSubRecords()
+const { getSubRecords } = readSubRecords()
 const { updateToDb, handleChange, fileUrl } = updateRecord()
 const id = route.params.id
 console.log(id)
@@ -131,7 +135,7 @@ const setImg = () => {
 }
 
 getJson('singleUnit', id)
-getSubRecords('researchDirections', id)
+let records = getSubRecords('researchDirections', id)
 
 const showForm = ref(false)
 const researchText = ref('')

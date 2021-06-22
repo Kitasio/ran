@@ -3,22 +3,23 @@ import axios from 'axios'
 import clientPath  from './config'
 
 const readSubRecords = () => {
-    const subRecords = ref('')
     const getSubRecords = (query, ...data) => {
+        const subRecords = ref([])
         axios
             .post(clientPath + "/api/readSubRecords", {
                 query: query,
                 data: data,
             })
             .then(response => {
-                subRecords.value = JSON.parse(response.data)
+                subRecords.value.push(JSON.parse(response.data)) 
             })
             .catch(err => {
                 console.log(err)
             })
+        return subRecords.value
     }
 
-    return { getSubRecords, subRecords }
+    return { getSubRecords }
 }
 
 export default readSubRecords
