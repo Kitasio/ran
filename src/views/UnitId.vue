@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="flex">
-        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="setImg" v-if="admin">Редактировать</div>
+        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="edit = !edit" v-if="admin">Редактировать</div>
         <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="showDelete = true" v-if="admin && !showDelete">Удалить</div>
         <div class="text-red-600 p-3 mr-5" v-if="admin && showDelete">Вы уверены?</div>
         <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="deleteFromDb('deleteUnit', $route.params.id)" v-if="admin && showDelete">Да</div>
@@ -24,7 +24,7 @@
         <div class="col-span-4 md:col-span-3 mt-2">
           <div v-for="doc in jsonData" :key="doc.id">
               <div class="col-span-4 md:col-span-3 mt-2">
-                <div class="font-nova-bold text-4xl">{{ doc.title }}</div>
+                <div class="font-nova-bold text-4xl" ref="unitTitle">{{ doc.title }}</div>
                 <div class="mt-10 text-lg" v-html="doc.body"></div>
               </div>
           </div>
@@ -46,7 +46,8 @@
               <p class="text-lg" v-html="record.body"></p>
             </div>
           </div>
-
+          {{jsonData[0].title}}
+          {{managers[0][2].unit}}
           <div class="col-span-3 hidden lg:flex mt-10">
               <table class="table-fixed w-full max-h-16">
                 <thead class="shadow-brand sticky top-3 rounded-lg">
@@ -58,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="person in jsonData" :key="person.id" @click.alt="deleteFromDb('deleteManagement', person.id)" class="stag relative h-20 border-b border-black">
+                    <tr v-for="person in managers[0]" :key="person.id" @click.alt="deleteFromDb('deleteManagement', person.id)" class="stag relative h-20 border-b border-black">
                         <td class="pl-5 py-3 select-all">{{ person.position }}</td>
                         <td class="pl-5 py-3 select-all text-blue-600">
                           <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
@@ -71,7 +72,7 @@
           </div>
 
           <div class="col-span-4 sm:grid-cols-2 lg:col-span-3 grid gap-5 lg:hidden">
-              <div v-for="person in jsonData" :key="person.id" class="shadow-md p-3 rounded-lg">
+              <div v-for="person in managers[0]" :key="person.id" class="shadow-md p-3 rounded-lg">
                   <div class="flex justify-between">
                       <div class="font-nova-semi">Должность</div>
                       <div class="text-sm text-right">{{ person.position }}</div>
@@ -124,18 +125,11 @@ const { getJson, jsonData } = readRecords()
 const { getSubRecords } = readSubRecords()
 const { updateToDb, handleChange, fileUrl } = updateRecord()
 const id = route.params.id
-console.log(id)
 checkAuth()
-
-const setImg = () => {
-    edit.value = !edit.value
-    let i = document.getElementById("imgPath")
-    console.log(i.getAttribute("src"))
-    fileUrl.value = i.getAttribute("src")
-}
 
 getJson('singleUnit', id)
 let records = getSubRecords('researchDirections', id)
+let managers = getSubRecords('getManagement')
 
 const showForm = ref(false)
 const researchText = ref('')

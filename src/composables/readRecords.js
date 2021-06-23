@@ -3,9 +3,9 @@ import axios from 'axios'
 import clientPath  from './config'
 
 const readRecords = () => {
-    const jsonData = ref('')
-    const getJson = (query, ...data) => {
-        axios
+    const jsonData = ref(null)
+    const getJson = async (query, ...data) => {
+        await axios
             .post(clientPath + "/api/readRecords", {
                 query: query,
                 data: data,
