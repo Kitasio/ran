@@ -24,7 +24,7 @@
         <div class="col-span-4 md:col-span-3 mt-2">
           <div v-for="doc in jsonData" :key="doc.id">
               <div class="col-span-4 md:col-span-3 mt-2">
-                <div class="font-nova-bold text-4xl" ref="unitTitle">{{ doc.title }}</div>
+                <div class="font-nova-bold text-4xl">{{ doc.title }}</div>
                 <div class="mt-10 text-lg" v-html="doc.body"></div>
               </div>
           </div>
@@ -46,8 +46,6 @@
               <p class="text-lg" v-html="record.body"></p>
             </div>
           </div>
-          {{jsonData[0].title}}
-          {{managers[0][2].unit}}
           <div class="col-span-3 hidden lg:flex mt-10">
               <table class="table-fixed w-full max-h-16">
                 <thead class="shadow-brand sticky top-3 rounded-lg">
@@ -128,8 +126,8 @@ const id = route.params.id
 checkAuth()
 
 getJson('singleUnit', id)
-let records = getSubRecords('researchDirections', id)
-let managers = getSubRecords('getManagement')
+const records = getSubRecords('researchDirections', id)
+const managers = getSubRecords('getManagement')
 
 const showForm = ref(false)
 const researchText = ref('')

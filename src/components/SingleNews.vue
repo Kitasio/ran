@@ -20,7 +20,7 @@ import { ref } from 'vue'
 import readRecords from '../composables/readRecords'
 
 const { getJson, jsonData } = readRecords()
-getJson('singleNews', '39')
+getJson('singleNews', '11')
 
 </script>
 
