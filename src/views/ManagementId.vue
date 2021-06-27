@@ -119,9 +119,7 @@ checkAuth()
 
 const setImg = () => {
     edit.value = !edit.value
-    let i = document.getElementById("imgPath")
-    console.log(i.getAttribute("src"))
-    fileUrl.value = i.getAttribute("src")
+    fileUrl.value = jsonData.value[0].img
 }
 
 const subRecords = []

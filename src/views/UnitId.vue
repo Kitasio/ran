@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="flex">
-        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="edit = !edit" v-if="admin">Редактировать</div>
+        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="edit = !edit; setImg();" v-if="admin">Редактировать</div>
         <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="showDelete = true" v-if="admin && !showDelete">Удалить</div>
         <div class="text-red-600 p-3 mr-5" v-if="admin && showDelete">Вы уверены?</div>
         <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="deleteFromDb('deleteUnit', $route.params.id)" v-if="admin && showDelete">Да</div>
@@ -28,6 +28,7 @@
                 <div class="mt-10 text-lg" v-html="doc.body"></div>
               </div>
           </div>
+
           <div class="mt-10">
             <div class="flex">
               <div v-if="admin" @click="showForm = !showForm" class="p-2 mb-5 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить направление исследований</div>
@@ -46,38 +47,36 @@
               <p class="text-lg" v-html="record.body"></p>
             </div>
           </div>
-          <div class="col-span-3 hidden lg:flex mt-10">
-              <table class="table-fixed w-full max-h-16">
-                <thead class="shadow-brand sticky top-3 rounded-lg">
-                    <tr class=" overscroll-x-auto">
-                        <th class="w-1/4 text-left pl-5 py-5">Должность</th>
-                        <th class="w-1/4 text-left pl-5 py-5">ФИО</th>
-                        <th class="w-1/4 text-left pl-5 py-5">Телефон</th>
-                        <th class="w-1/4 text-left pl-5 py-5">E-mail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="person in managers[0]" :key="person.id" @click.alt="deleteFromDb('deleteManagement', person.id)" class="stag relative h-20 border-b border-black">
-                        <td class="pl-5 py-3 select-all">{{ person.position }}</td>
-                        <td class="pl-5 py-3 select-all text-blue-600">
-                          <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
-                        </td>
-                        <td class="pl-5 py-3 select-all">{{ person.phone }}</td>
-                        <td class="pl-5 py-3 select-all">{{ person.email }}</td>
-                    </tr>
-                </tbody>
-               </table>
+
+          <div class="col-span-3 hidden lg:inline mt-10">
+            <div class="grid grid-cols-4 w-full p-5 shadow-brand rounded-md">
+              <div class="text-lg font-nova-semi">Должность</div>
+              <div class="text-lg font-nova-semi">ФИО</div>
+              <div class="text-lg font-nova-semi">Телефон</div>
+              <div class="text-lg font-nova-semi">E-mail</div>
+            </div>
+            <div v-for="person in managers[0]" :key="person.id">
+              <div v-if="person.unit == jsonData[0].title" class="grid grid-cols-4 place-content-center w-full py-4 px-5 border-black border-b">
+                <div class="my-auto mr-3">{{person.position}}</div>
+                <div class="my-auto text-blue-600">
+                  <router-link :to="`/management/${person.id}`">{{person.name}}</router-link>
+                </div>
+                <div class="my-auto">{{person.phone}}</div>
+                <div class="my-auto">{{person.email}}</div>
+              </div>
+            </div>
           </div>
 
           <div class="col-span-4 sm:grid-cols-2 lg:col-span-3 grid gap-5 lg:hidden">
               <div v-for="person in managers[0]" :key="person.id" class="shadow-md p-3 rounded-lg">
+                <div v-if="person.unit == jsonData[0].title">
                   <div class="flex justify-between">
                       <div class="font-nova-semi">Должность</div>
                       <div class="text-sm text-right">{{ person.position }}</div>
                   </div>
                   <div class="flex justify-between mt-2">
                       <div class="font-nova-semi">ФИО</div>
-                      <div class="text-sm text-right">
+                      <div class="text-sm text-right text-blue-600">
                         <router-link :to="`/management/${person.id}`">{{ person.name }}</router-link>
                       </div>
                   </div>
@@ -89,6 +88,8 @@
                       <div class="font-nova-semi">E-mail</div>
                       <div class="text-sm text-right">{{ person.email }}</div>
                   </div>
+                </div>
+                  
               </div>
           </div>
         </div>
@@ -124,6 +125,10 @@ const { getSubRecords } = readSubRecords()
 const { updateToDb, handleChange, fileUrl } = updateRecord()
 const id = route.params.id
 checkAuth()
+
+const setImg = () => {
+  fileUrl.value = jsonData.value[0].img
+}
 
 getJson('singleUnit', id)
 const records = getSubRecords('researchDirections', id)

@@ -15,6 +15,9 @@ module.exports = {
         'light-purple': '#ad92b7',
         'base-green': '#00ff4a',
         'base-red': '#ff005c',
+        blue: {
+          600: '#1360D2',
+        }
       },
       fontFamily: {
         'nova-light': 'nova-light',
