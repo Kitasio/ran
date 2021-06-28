@@ -31,9 +31,7 @@
             <div class="font-nova-bold mt-1 text-sm" v-html="singleNews.title"></div>
             <div class="mt-1 text-sm" v-html="singleNews.date"></div>
           </router-link>
-          <!-- <Delete collection="news" :docId="singleNews.id" :imgName="singleNews.imgName" /> -->
         </div>
-        
       </div>
 
       <div class="flex mt-5">

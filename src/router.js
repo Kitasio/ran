@@ -14,8 +14,18 @@ import Council from './views/Council.vue'
 import Partners from './views/Partners.vue'
 import About from './views/About.vue'
 import Documents from './views/Documents.vue'
+import Home from './views/Home.vue'
 
 const routes = [
+    {
+        path: '/',
+        redirect: '/home'
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: Home,
+    },
     {
         path: '/login',
         name: 'Login',
