@@ -2,7 +2,7 @@
   <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <router-link :to="`/news/${jsonData[0].id}`" class="flex flex-col md:flex-row col-span-full lg:col-span-3">
           <img class="md:w-96 rounded-md object-cover overflow-hidden border" :src="jsonData[0].img" alt="">
-          <div class="md:ml-5">
+          <div class="md:ml-5 lg:w-1/2">
               <div class="text-blue-600 text-lg font-nova-bold uppercase">{{ jsonData[0].tag }}</div>
               <div class="font-nova-bold mt-3 text-xl">{{ jsonData[0].title }}</div>
               <div class="text-sm text-gray-500">{{ jsonData[0].date }}</div>

@@ -24,11 +24,25 @@ const createRecord = () => {
     }
 
     const handleChange = (e) => {
+        // allowed file types
+        const types = ['image/png', 'image/jpeg']
+
         // selected file
         const selected = e.target.files[0]
 
-        if (selected) {
+        if (selected && types.includes(selected.type)) {
             file.value = selected
+            let formData = new FormData();
+        
+            formData.append("file", file.value);
+            axios.post(clientPath + '/api/upload', formData, access_token)
+            .then(res => {
+                fileUrl.value = res.data["filepath"]
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         } else {
             file.value = null
         }

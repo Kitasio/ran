@@ -24,14 +24,12 @@
             </div>
         </form>
       </div>
-      <div class="mt-5 grid lg:grid-cols-4 gap-x-10">
+      <div class="grid lg:grid-cols-4 gap-x-10">
         <div class="col-span-4 mt-2">
           <div class="mb-10 font-nova-bold text-3xl">Сотрудники ИДВ РАН</div>
           <div v-for="doc in jsonData" :key="doc.id">
-              <div class="flex">
-                <div v-if="doc.img" class="w-32">
-                  <img class="object-cover" :src="doc.img" alt="">
-                </div>
+              <div class="flex space-x-5">
+                <img v-if="doc.img" class="object-cover w-28 h-28 rounded-full" :src="doc.img" alt="">
                 <div>
                   <div class="text-blue-600 text-xl font-nova-semi">{{ doc.name }}</div>
                   <div class="mb-2">{{ doc.position }}</div>
@@ -142,8 +140,6 @@ const paper = ref({
 })
 
 getJson('singleManagement', id)
-let papers = getSubRecords('getPapersForAuthor', id)
-let books = getSubRecords('getBooksForAuthor', id)
 
 const showForm = ref(false)
 const researchText = ref('')

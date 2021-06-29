@@ -7,17 +7,12 @@
 
       <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createPartner', doc.name, doc.link, fileUrl)">
         <label for="image">Выберите картинку</label>
-        <div class="flex m-4">
-            <input @change="handleChange($event)" class="mb-5 mr-5" name="file" type="file" placeholder="Картинка">
-            <div v-if="!fileUrl" @click="uploadImage" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Сохранить</div>
-            <div v-if="fileUrl" @click="uploadImage" class="p-2 transition cursor-pointer rounded-md text-blue-600">Готово</div>
-        </div>
+        <input @change="handleChange($event)" class="mb-5 mr-5" name="file" type="file" placeholder="Картинка">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.name" type="text" placeholder="Имя">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.link" type="text" placeholder="Ссылка">
 
         <div>
-            <button class="text-left p-3 rounded text-blue-600 transition bg-white border-2 border-blue-600 hover:bg-blue-600 hover:text-white" v-if="!isLoading">Сохранить</button>
-            <button class="text-left p-3 rounded text-blue-600 transition bg-white border-2 border-blue-600 hover:bg-blue-600 hover:text-white" v-else disabled>Загрузка...</button>        
+            <button class="text-left p-3 rounded text-blue-600 transition bg-white border-2 border-blue-600 hover:bg-blue-600 hover:text-white">Сохранить</button>
         </div>
       </form>
 
