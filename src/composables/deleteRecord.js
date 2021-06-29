@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 import clientPath  from './config'
 
-const deleteRecord = () => {
+const deleteRecord = (go) => {
     const router = useRouter()
     const at = localStorage.getItem('access_token')
     const access_token = {
@@ -15,7 +15,7 @@ const deleteRecord = () => {
                 data: data,
             }, access_token)
             .then(response => {
-                router.go(-1)
+                router.go(go)
             }) 
     }
 

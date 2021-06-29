@@ -1,7 +1,7 @@
 <template>
-  <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <router-link :to="`/news/${jsonData[0].id}`" class="flex flex-col md:flex-row col-span-full lg:col-span-3">
-          <img class="md:w-1/2 rounded-md object-cover overflow-hidden border" :src="jsonData[0].img" alt="">
+          <img class="md:w-96 rounded-md object-cover overflow-hidden border" :src="jsonData[0].img" alt="">
           <div class="md:ml-5">
               <div class="text-blue-600 text-lg font-nova-bold uppercase">{{ jsonData[0].tag }}</div>
               <div class="font-nova-bold mt-3 text-xl">{{ jsonData[0].title }}</div>
@@ -26,7 +26,7 @@
     <div class="font-nova-bold text-xl mr-10">Новости</div>
     <router-link to="/news" class="text-blue-600">все новости</router-link>
   </div>
-  <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     <div class="relative" v-for="singleNews in jsonData.slice(1,5)" :key="singleNews.id">
         <router-link :to="`/news/${singleNews.id}`">
             <img class="w-full rounded" :src="singleNews.img" alt="">
@@ -41,7 +41,7 @@
     <div class="font-nova-bold text-xl mr-10">Издания</div>
     <router-link to="/library" class="text-blue-600">все издания</router-link>
   </div>
-  <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <div v-for="book in books[0]" :key="book.id" @click.alt="deleteFromDb('deleteBook', book.id.toString())">
         <div class="flex">
           <img class="w-20 object-cover" :src="book.book_img" alt="">
