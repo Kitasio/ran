@@ -5,14 +5,16 @@
         <div v-if="admin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить дирекцию</div>
       </div>
 
-      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createManagement', doc.name, doc.position, doc.phone, doc.email, doc.unit)">
-        <!-- <label for="image">Выберите картинку</label> -->
-        <!-- <input @change="handleChange" class="mb-5" name="image" type="file" placeholder="Картинка"> -->
+      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createManagement', doc.name, doc.position, doc.phone, doc.email, doc.unit, doc.about, doc.links, fileUrl)">
+        <label for="image">Выберите картинку</label>
+        <input @change="handleChange" class="mb-5" name="image" type="file" placeholder="Картинка">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.name" type="text" placeholder="Имя">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.position" type="text" placeholder="Должность">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.phone" type="text" placeholder="Телефон">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.email" type="text" placeholder="E-mail">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.unit" type="text" placeholder="Подразделение">
+        <textarea class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.about" type="text" placeholder="Описание"></textarea>
+        <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.links" type="text" placeholder="Соцсети">
 
         <div>
             <button class="text-left p-3 rounded text-blue-600 transition bg-white border-2 border-blue-600 hover:bg-blue-600 hover:text-white">Сохранить</button>
@@ -98,7 +100,7 @@ const del = (id) => {
 
 const showForm = ref(false)
 const { getJson, jsonData } = readRecords()
-const { writeToDb } = createRecord()
+const { writeToDb, handleChange, fileUrl } = createRecord()
 const { deleteFromDb } = deleteRecord()
 const { admin, checkAuth } = getAuth()
 
