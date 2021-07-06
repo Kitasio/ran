@@ -1,10 +1,10 @@
 <template>
   <div>
       <div class="flex">
-        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="setImg" v-if="admin">Редактировать</div>
-        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="showDelete = true" v-if="admin && !showDelete">Удалить</div>
-        <div class="text-red-600 p-3 mr-5" v-if="admin && showDelete">Вы уверены?</div>
-        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="deleteFromDb('deleteNews', $route.params.id)" v-if="admin && showDelete">Да</div>
+        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="setImg" v-if="isAdmin || username == jsonData[0].created_by">Редактировать</div>
+        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="showDelete = true" v-if="(isAdmin || username == jsonData[0].created_by) && !showDelete">Удалить</div>
+        <div class="text-red-600 p-3 mr-5" v-if="username && showDelete">Вы уверены?</div>
+        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="deleteFromDb('deleteNews', $route.params.id)" v-if="username && showDelete">Да</div>
       </div>
       <div v-for="doc in jsonData" :key="doc.id" class="flex flex-col">
         <form v-if="edit" class="flex flex-col" @submit.prevent="updateToDb('updateNews', doc.title, doc.tag, doc.date, doc.body, fileUrl, id)">
@@ -52,8 +52,8 @@ import readRecords from '../composables/readRecords'
 import updateRecord from '../composables/updateRecord'
 
 const route = useRoute()
-const { deleteFromDb } = deleteRecord()
-const { admin, checkAuth } = getAuth()
+const { deleteFromDb } = deleteRecord(-1)
+const { isAdmin, username, uid, checkAuth } = getAuth()
 const { getJson, jsonData } = readRecords() 
 const { updateToDb, handleChange, fileUrl } = updateRecord()
 const id = route.params.id

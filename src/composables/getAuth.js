@@ -4,31 +4,30 @@ import { useRouter } from 'vue-router'
 import clientPath  from './config'
 
 const getAuth = () => {
-    const admin = ref(null)
+    const isAdmin = ref(null)
+    const username = ref('')
+    const uid = ref(null)
     const router = useRouter()
 
     const checkAuth = () => {
         const at = localStorage.getItem('access_token')
-        const rt = localStorage.getItem('refresh_token')
         const access_token = {
             headers: { Authorization: `Bearer ${at}` }
-        };
-        const refresh_token = {
-            headers: { Authorization: `Bearer ${rt}` }
         };
         axios
             .post(clientPath + "/api/auth", {}, access_token)
             .then(response => {
                 if (response.data) {
-                    admin.value = response.data
-                    console.log(admin.value)
+                    isAdmin.value = response.data.admin
+                    username.value = response.data.username
+                    uid.value = response.data.uid
                 }
             })
             .catch(err => {
                 localStorage.clear()
             })
     }
-    return { admin, checkAuth }
+    return { isAdmin, username, uid, checkAuth }
 }
 
 export default getAuth

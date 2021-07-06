@@ -2,10 +2,10 @@
   <div>
       <div class="flex justify-between">
         <h1 class="text-3xl font-nova-bold">Анонсы и события института</h1>
-        <div v-if="admin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить анонс</div>
+        <div v-if="username" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить анонс</div>
       </div>
 
-      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createAd', doc.title, doc.tag, doc.date, doc.time)">
+      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createAd', doc.title, doc.tag, doc.date, doc.time, username)">
         
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.title" type="text" placeholder="Заголовок">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.tag" type="text" placeholder="Тег">
@@ -27,7 +27,6 @@
               <div class="text-xs" v-html="singleAd.date"></div>
           </router-link>
         </div>
-        
       </div>
   </div>
 </template>
@@ -43,7 +42,7 @@ getJson('allAds')
 const showForm = ref(false)
 
 const { handleChange, writeToDb, uploadImage, fileUrl } = createRecord()
-const { admin, checkAuth } = getAuth()
+const { isAdmin, username, uid, checkAuth } = getAuth()
 checkAuth()
 
 const doc = ref({

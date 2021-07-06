@@ -1,8 +1,8 @@
 <template>
     <div class="flex">
-        <div v-if="admin" @click="showForm = !showForm" class="p-2 my-5 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить в образование</div>
+        <div v-if="username" @click="showForm = !showForm" class="p-2 my-5 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить в образование</div>
     </div>
-    <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createEducation', doc.year, doc.text, props.id)">
+    <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createEducation', doc.year, doc.text, props.id, username)">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.year" type="text" placeholder="Год">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.text" type="text" placeholder="Текст">
         <div>
@@ -31,7 +31,7 @@ import deleteRecord from "../../composables/deleteRecord";
 
 const props = defineProps(['id'])
 const { writeToDb } = createRecord()
-const { admin, checkAuth } = getAuth()
+const { isAdmin, username, uid, checkAuth } = getAuth()
 const { deleteFromDb } = deleteRecord()
 const { jsonData, getJson } = readRecords()
 getJson('getEducation', props.id)

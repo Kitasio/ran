@@ -2,11 +2,11 @@
   <div>
       <div class="flex justify-between">
         <h1 class="text-3xl font-nova-bold">Документы</h1>
-        <div v-if="admin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить документ</div>
+        <div v-if="username" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить документ</div>
         <div></div>
       </div>
 
-      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createDocument', doc.category, doc.name, doc.format, fileUrl)">
+      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createDocument', doc.category, doc.name, doc.format, fileUrl, username)">
         <label for="image">Выберите документ</label>
         <div class="flex m-4">
             <input @change="handleChange($event)" class="mb-5 mr-5" name="file" type="file" placeholder="Документ">
@@ -63,7 +63,7 @@ const showForm = ref(false)
 const { getJson, jsonData } = readRecords()
 const { handleChange, writeToDb, uploadImage, fileUrl } = createRecord()
 const { deleteFromDb } = deleteRecord()
-const { admin, checkAuth } = getAuth()
+const { isAdmin, username, uid, checkAuth } = getAuth()
 
 checkAuth()
 getJson('getDocuments')

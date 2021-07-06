@@ -2,10 +2,10 @@
   <div>
       <div class="flex justify-between">
         <h1 class="text-3xl font-nova-bold">Новости института</h1>
-        <div v-if="admin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить новость</div>
+        <div v-if="username" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить новость</div>
       </div>
 
-      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createNews', doc.title, doc.tag, doc.date, doc.body, fileUrl)">
+      <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createNews', doc.title, doc.tag, doc.date, doc.body, fileUrl, username)">
         <label for="image">Выберите картинку</label>
         <input @change="handleChange($event)" class="mb-5 mr-5" name="file" type="file" placeholder="Картинка">
         <input class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.title" type="text" placeholder="Заголовок">
@@ -47,7 +47,7 @@ getJson('allNews')
 const showForm = ref(false)
 
 const { handleChange, writeToDb, uploadImage, fileUrl } = createRecord()
-const { admin, checkAuth } = getAuth()
+const { isAdmin, username, uid, checkAuth } = getAuth()
 checkAuth()
 
 const doc = ref({

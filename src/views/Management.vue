@@ -2,7 +2,7 @@
   <div>
       <div class="flex justify-between">
         <h1 class="text-3xl font-nova-bold">Дирекция института</h1>
-        <div v-if="admin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить дирекцию</div>
+        <div v-if="isAdmin" @click="showForm = !showForm" class="p-2 text-blue-600 border-2 border-blue-600 transition cursor-pointer rounded-md hover:text-white hover:bg-blue-600">Добавить дирекцию</div>
       </div>
 
       <form v-if="showForm" class="flex flex-col border-b border-blue-600 pb-10" @submit.prevent="writeToDb('createManagement', doc.name, doc.position, doc.phone, doc.email, doc.unit, doc.about, doc.links, fileUrl)">
@@ -102,7 +102,7 @@ const showForm = ref(false)
 const { getJson, jsonData } = readRecords()
 const { writeToDb, handleChange, fileUrl } = createRecord()
 const { deleteFromDb } = deleteRecord()
-const { admin, checkAuth } = getAuth()
+const { isAdmin, username, uid, checkAuth } = getAuth()
 
 checkAuth()
 getJson('getManagement')

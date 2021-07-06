@@ -1,17 +1,17 @@
 <template>
   <div>
       <div class="flex">
-        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="setImg" v-if="admin">Редактировать</div>
-        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="showDelete = true" v-if="admin && !showDelete">Удалить</div>
-        <div class="text-red-600 p-3 mr-5" v-if="admin && showDelete">Вы уверены?</div>
-        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="deleteFromDb('deleteAd', $route.params.id)" v-if="admin && showDelete">Да</div>
+        <div class="text-blue-600 border p-3 rounded border-blue-600 transition hover:bg-blue-600 hover:text-white cursor-pointer mr-5" @click="setImg" v-if="isAdmin || username == jsonData[0].created_by">Редактировать</div>
+        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="showDelete = true" v-if="(isAdmin || username == jsonData[0].created_by) && !showDelete">Удалить</div>
+        <div class="text-red-600 p-3 mr-5" v-if="username && showDelete">Вы уверены?</div>
+        <div class="text-red-600 border p-3 rounded border-red-600 transition hover:bg-red-600 hover:text-white cursor-pointer mr-5" @click="deleteFromDb('deleteAd', $route.params.id)" v-if="username && showDelete">Да</div>
       </div>
       <div v-for="doc in jsonData" :key="doc.id" class="flex flex-col">
         <form v-if="edit" class="flex flex-col" @submit.prevent="updateToDb('updateAd', doc.title, doc.tag, doc.date, doc.time, id)">
             <input v-if="doc.title" class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.title" type="text" placeholder="Заголовок">
             <input v-if="doc.tag" class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.tag" type="text" placeholder="Тег">
             <input v-if="doc.date" class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.date" type="text" placeholder="Дата">
-            <input v-if="doc.time" class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.body" type="text" placeholder="Текст">
+            <input v-if="doc.time" class="p-2 rounded shadow border-2 border-blue-600 ring-offset-2 mb-5" v-model="doc.time" type="text" placeholder="Время проведения">
 
             <div>
                 <button class="text-left p-3 rounded text-blue-600 transition bg-white border-2 border-blue-600 hover:bg-blue-600 hover:text-white" v-if="!isLoading">Сохранить</button>
@@ -49,12 +49,11 @@ import readRecords from '../composables/readRecords'
 import updateRecord from '../composables/updateRecord'
 
 const route = useRoute()
-const { deleteFromDb } = deleteRecord()
-const { admin, checkAuth } = getAuth()
+const { deleteFromDb } = deleteRecord(-1)
+const { isAdmin, username, uid, checkAuth } = getAuth()
 const { getJson, jsonData } = readRecords() 
 const { updateToDb, handleChange, fileUrl } = updateRecord()
 const id = route.params.id
-console.log(id)
 checkAuth()
 
 const setImg = () => {
